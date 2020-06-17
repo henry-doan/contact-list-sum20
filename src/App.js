@@ -17,10 +17,20 @@ class App extends Component {
       .substring(1);
   };
 
+  // { firstName: 'bob', phone: '134134-13241234' }
   addContact = (incomingContact) => {
     const { contacts } = this.state
     const newContact = { id: this.getId(), ...incomingContact }
     this.setState({ contacts: [ newContact, ...contacts ]})
+  }
+
+  deleteContact = (id) => {
+    const contacts = this.state.contacts.filter( contact => {
+      if (contact.id !== id) {
+        return contact
+      }
+    })
+    this.setState({ contacts })
   }
 
   render() {
@@ -31,7 +41,7 @@ class App extends Component {
         <Header size="huge" color='blue' textAlign='center'>
           Contact list
         </Header>
-        <Contacts contacts={contacts} />
+        <Contacts contacts={contacts} deleteContact={this.deleteContact}/>
       </div>
     )
   }
